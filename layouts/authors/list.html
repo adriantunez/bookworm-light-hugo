@@ -1,0 +1,13 @@
+{{define "main"}}
+
+<section class="section-sm">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      {{ range .RegularPages }}
+        {{ partial "list-author.html" (dict "authorPath" .RelPermalink "showAuthorName" true) }}
+      {{end}}
+    </div>
+  </div>
+</section>
+
+{{end}}

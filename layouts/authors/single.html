@@ -1,0 +1,35 @@
+{{define "main"}}
+
+<section class="section-sm">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+        {{ partial "list-author.html" (dict "authorPath" "authors/adri-antunez" "showAuthorName" false) }}
+
+        <div class="content col-lg-10 mt-1">
+          {{.Content}}
+        </div>
+      </div>
+    </div>
+    
+    {{ if .Params.what_i_do.enable }}
+    {{ with .Params.what_i_do }}
+    <div class="section-sm pb-0">
+      <div class="row justify-content-center">
+        <div class="col-10 text-center">
+          <h4 class="text-dark">{{ .title }}</h4>
+        </div>
+        {{ range .item }}
+          <div class="col-lg-3 text-center mb-5">
+            <i class="{{.icon}} la-4x text-primary mb-4"></i>
+            <h5 class="text-dark mb-3">{{ .title }}</h5>
+            <p>{{ .description }}</p>
+          </div>
+        {{end}}
+      </div>
+    </div>
+    {{end}}
+    {{end}}
+  </div>
+</section>
+
+{{end}}

@@ -37,3 +37,10 @@
 
 <!-- cookie consent -->
 {{ partialCached "cookie-consent.html" . }}
+
+{{ with site.Params.cloudflare_analytics }}
+{{ if .enable }}
+<!-- Cloudflare Web Analytics -->
+<script defer src='{{.src}}' data-cf-beacon='{"token": "{{.token}}"}'></script><!-- End Cloudflare Web Analytics -->
+{{end}}
+{{end}}
