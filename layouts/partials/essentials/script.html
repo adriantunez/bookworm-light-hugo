@@ -7,7 +7,7 @@
 {{ if hugo.IsProduction }}
   {{ $bootstrap = $bootstrap | fingerprint "sha512" }}
 {{ end }}
-<script crossorigin="anonymous" defer {{ if hugo.IsProduction }}integrity="{{ $bootstrap.Data.Integrity }}"{{end}} type="application/javascript">{{$bootstrap.Content | safeJS}}</script>
+<script crossorigin="anonymous" {{ if hugo.IsProduction }}integrity="{{ $bootstrap.Data.Integrity }}"{{end}}>{{$bootstrap.Content | safeJS}}</script>
 
 <!-- JS Plugins + Main script -->
 {{ $scripts := slice }}
@@ -15,7 +15,6 @@
   {{ if findRE "^http" .link }}
     <script
       src="{{ .link | relURL }}"
-      type="application/javascript"
       {{ .attributes | safeHTMLAttr }}></script>
   {{ else }}
     {{ $scripts = $scripts | append (resources.Get .link) }}
@@ -28,7 +27,7 @@
 {{ if hugo.IsProduction }}
   {{ $scripts = $scripts | fingerprint "sha512" }}
 {{ end }}
-<script crossorigin="anonymous" defer {{ if hugo.IsProduction }}integrity="{{ $scripts.Data.Integrity }}"{{end}} type="application/javascript">{{$scripts.Content | safeJS}}</script>
+<script crossorigin="anonymous" {{ if hugo.IsProduction }}integrity="{{ $scripts.Data.Integrity }}"{{end}}>{{$scripts.Content | safeJS}}</script>
 
 
 <!-- progressive web app -->
@@ -38,9 +37,9 @@
 <!-- cookie consent -->
 {{ partialCached "cookie-consent.html" . }}
 
-{{ with site.Params.cloudflare_analytics }}
+{{ with site.Params.analytics }}
 {{ if .enable }}
-<!-- Cloudflare Web Analytics -->
-<script defer src='{{.src}}' data-cf-beacon='{"token": "{{.token}}"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- simple analytics -->
+<script async src="{{ .src }}"></script>
 {{end}}
 {{end}}

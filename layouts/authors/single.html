@@ -3,32 +3,91 @@
 <section class="section-sm">
   <div class="container">
     <div class="row justify-content-center text-center">
-        {{ partial "list-author.html" (dict "authorPath" "authors/adri-antunez" "showAuthorName" false) }}
+      {{ partial "list-author.html" (dict "authorPath" "authors/adri-antunez" "showAuthorName" false) }}
 
-        <div class="content col-lg-10 mt-1">
-          {{.Content}}
-        </div>
+      <h4 class="title mb-4 text-left">Long Story Short</h4>
+      <div class="content col-lg-10 text-left mt-1">
+        {{.Content}}
       </div>
     </div>
     
     {{ if .Params.what_i_do.enable }}
     {{ with .Params.what_i_do }}
-    <div class="section-sm pb-0">
-      <div class="row justify-content-center">
-        <div class="col-10 text-center">
-          <h4 class="text-dark">{{ .title }}</h4>
-        </div>
+    <!-- <div class="section-sm pb-0"> -->
+      <div class="row justify-content-center text-center">
+        <!-- <div class="col-10 text-center"> -->
+          <h4 class="title mb-4 text-left">{{ .title }}</h4>
+        <!-- </div> -->
         {{ range .item }}
-          <div class="col-lg-3 text-center mb-5">
+          <div class="col-lg-4 text-center mb-5">
             <i class="{{.icon}} la-4x text-primary mb-4"></i>
             <h5 class="text-dark mb-3">{{ .title }}</h5>
-            <p>{{ .description }}</p>
+            <p class="text-left">{{ .description }}</p>
           </div>
         {{end}}
       </div>
+    <!-- </div> -->
+    {{end}}
+    {{end}}
+
+  {{ if .Params.work_timeline.enable }}
+  {{ with .Params.work_timeline}}
+    <div class="row justify-content-center text-center mb-5">
+      <h4 class="title mb-4 text-left">{{ .title }}</h4>
+      <div class="content col-lg-10 text-left mt-1">
+        {{ .description }}
+      </div>
+      
+      <div class="col-lg-10 text-left mt-1">
+        <div class="timeline-page position-relative">
+          {{ range $index, $elem := .job}}
+            <div class="timeline-item pt-4">
+              <div class="row mb-2">
+                {{ if eq (mod $index 2) 0 }}
+                  <!-- even -->
+                  <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="duration date-label-left position-relative text-md-end">
+                      <h6 class="mb-0">{{ $elem.company | markdownify }}</h6>
+                      <small class="text-muted mb-0">{{ $elem.period }}</small>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 mt-4 mt-sm-0">
+                    <div class="event event-description-right float-left text-start">
+                      <h6 class="title text-primary">{{ $elem.title | markdownify }}</h6>
+                      <p class="timeline-subtitle mt-3 mb-0 text-muted">
+                        {{ range $elem.description }}
+                          <span class="badge bg-secondary">{{ . }}</span>
+                        {{end}}
+                      </p>
+                    </div>
+                  </div>
+                {{else}}
+                  <!-- odd -->
+                  <div class="col-lg-6 col-md-6 col-sm-6 mt-4 mt-sm-0">
+                    <div class="event event-description-left float-right text-end">
+                      <h6 class="title text-primary">{{ $elem.title | markdownify }}</h6>
+                      <p class="timeline-subtitle mt-3 mb-0 text-muted">
+                        {{ range $elem.description }}
+                          <span class="badge bg-secondary">{{ . }}</span>
+                        {{end}}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="duration duration-right position-relative">
+                      <h6 class="mb-0">{{ $elem.company | markdownify }}</h6>
+                      <small class="text-muted mb-0">{{ $elem.period }}</small>
+                    </div>
+                  </div>
+                {{end}}
+              </div>
+            </div>
+          {{ end }}
+        </div>
+      </div>
     </div>
-    {{end}}
-    {{end}}
+  {{ end }}
+  {{ end }}
   </div>
 </section>
 

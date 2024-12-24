@@ -21,8 +21,8 @@
                 <a href="#!" class="card-meta-author">
                   {{ with .Site.GetPage (.Params.author | urlize | lower) }}
                   <a href="{{.Permalink}}" class="card-meta-author">
-                    {{if .Params.image}}
-                      {{ partial "image.html" (dict "Src" .Params.image "Size" "26x26" "Class" "w-auto" "Alt" .Title) }}
+                    {{if .Params.thumbnail}}
+                      {{ partial "image.html" (dict "Src" .Params.thumbnail "Size" "26x26" "Class" "w-auto" "Alt" .Title) }}
                     {{else}}
                     {{ partial "image.html" (dict "Src" "images/authors/unknown.png" "Size" "26x26" "Class" "w-auto" "Alt" .Title) }}
                     {{end}}
@@ -46,7 +46,15 @@
       </div>
     </div>
 
-    <div class="single-post-meta">
+    {{ with site.Params.newsletter }}
+    {{ if .enable }}
+      <div class="row justify-content-center">
+        <script async src="{{ .remote_src }}{{ .single_data_form }}.js" data-form="{{ .single_data_form }}"></script>
+      </div>
+    {{end}}
+    {{end}}
+
+    <div class="single-post-meta mt-0">
       <div class="row justify-content-center">
         <div class="col-lg-5 col-md-6 text-center text-md-left">
           <ul class="post-meta-tags list-unstyled list-inline">
@@ -62,14 +70,14 @@
     </div>
 
     {{ if .Params.Author }}
-      <div class="single-post-author">
+      <div class="single-post-author mt-0">
         <div class="row justify-content-center">
           <div class="col-lg-10">
             <div class="media d-block d-sm-flex text-sm-left">
               {{ with .Site.GetPage (.Params.Author | urlize | lower) }}
               <a href="{{.Permalink}}">
-                {{if .Params.image}}
-                  {{ partial "image.html" (dict "Src" .Params.image "Size" "150x150" "Class" "img-fluid rounded-circle mr-0 mr-sm-4 mb-4" "Alt" .Title) }}
+                {{if .Params.thumbnail}}
+                  {{ partial "image.html" (dict "Src" .Params.thumbnail "Size" "150x150" "Class" "img-fluid rounded-circle mr-0 mr-sm-4 mb-4" "Alt" .Title) }}
                 {{else}}
                   {{ partial "image.html" (dict "Src" "images/authors/unknown.png" "Size" "150x150" "Class" "img-fluid rounded-circle mr-0 mr-sm-4 mb-4" "Alt" .Title) }}
                 {{end}}
@@ -121,7 +129,7 @@
       <div class="single-post-similer">
         <div class="row justify-content-center">
           <div class="col-lg-10">
-            <div class="row mt-3">
+            <div class="row">
               <div class="col-10">
                 <h4 class="mb-4 pb-2">You May Also Like</h4>
               </div>            

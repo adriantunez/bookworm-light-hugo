@@ -1,26 +1,32 @@
 <article class="card post-card">
   <div class="row no-gutters align-items-top">
     <div class="col-lg-5">
-      <div class="pr-0 pr-lg-5">
+      <div class="image-container pr-0 pr-lg-5">
         {{if .Params.image}}
         <a href="{{.Permalink}}">
           {{ partial "image.html" (dict "Src" .Params.image "Class" "w-100 h-auto rounded" "Alt" .Title) }}
         </a>
         {{end}}
+        {{ $categories := .Params.categories }}
+        {{with site.Params.lightning_pills}}
+          {{ if and (.enable) (in $categories .name) }}
+            <div class="overlay-text">{{ .name }}</div>
+          {{end}}
+        {{end}}
       </div>
     </div>
     <div class="col-lg-5">
       <div class="card-body">
-        <h5 class="text-dark mb-0">
+        <h3 class="h5 text-dark mb-0">
           <a class="post-title" href="{{.Permalink}}">{{.Title}}</a>
-        </h5>
+        </h3>
         <ul class="card-meta list-inline mb-2">
           {{ if .Params.Author }}
           <li class="list-inline-item mb-2">
             {{ with site.GetPage (.Params.Author | urlize | lower) }}
             <a href="{{.Permalink}}" class="card-meta-author">
-              {{if .Params.image}}
-                {{ partial "image.html" (dict "Src" .Params.image "Size" "26x26" "Class" "w-auto" "Alt" .Title) }}
+              {{if .Params.thumbnail}}
+                {{ partial "image.html" (dict "Src" .Params.thumbnail "Size" "26x26" "Class" "w-auto" "Alt" .Title) }}
               {{else}}
                 {{ partial "image.html" (dict "Src" "images/authors/unknown.png" "Size" "26x26" "Class" "w-auto" "Alt" .Title) }}
               {{end}}
